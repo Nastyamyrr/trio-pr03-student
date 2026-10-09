@@ -1,18 +1,12 @@
-/**
- * app.js — собственный JavaScript для практики 3
- * Загружает данные из JSON, рендерит интерфейс,
- * обрабатывает события, валидацию и Bootstrap-компоненты.
- */
-
 'use strict';
 
-// ---------- Состояние приложения ----------
+
 let metricsData = [];
 let rowsData = [];
 let notificationsData = [];
-let nextId = 9; // следующий id после данных из JSON
+let nextId = 9;
 
-// ---------- DOM-элементы ----------
+
 const metricsRow = document.getElementById('metricsRow');
 const actionsTableBody = document.getElementById('actionsTableBody');
 const rowsCounter = document.getElementById('rowsCounter');
@@ -28,17 +22,16 @@ const toastEl = document.getElementById('saveToast');
 const toastTitle = document.getElementById('toastTitle');
 const toastBody = document.getElementById('toastBody');
 
-// ---------- Bootstrap Toast (программный доступ) ----------
-// Требование №11: получить компонент через getOrCreateInstance
+
 const saveToast = bootstrap.Toast.getOrCreateInstance(toastEl, {
   delay: 3500,
   autohide: true
 });
 
-// ---------- Загрузка данных ----------
+
 async function loadDashboard() {
   try {
-    const res = await fetch('data/dashboard.json');
+    const res = await fetch('dashboard.json');
     if (!res.ok) throw new Error('Не удалось загрузить dashboard.json');
     const data = await res.json();
     metricsData = data.metrics || [];
@@ -59,7 +52,7 @@ async function loadDashboard() {
 
 async function loadNotifications() {
   try {
-    const res = await fetch('data/notifications.json');
+    const res = await fetch('notifications.json');
     if (!res.ok) throw new Error('Не удалось загрузить notifications.json');
     notificationsData = await res.json();
     renderNotifications();
@@ -69,7 +62,7 @@ async function loadNotifications() {
   }
 }
 
-// ---------- Рендер ----------
+
 function renderMetrics() {
   if (!metricsData.length) {
     metricsRow.innerHTML = '<div class="col-12 text-muted">Нет данных</div>';
@@ -142,7 +135,7 @@ function renderNotifications() {
   }).join('');
 }
 
-// ---------- Валидация (требование №12) ----------
+
 function validateActionName() {
   const value = actionNameInput.value.trim();
   actionNameInput.classList.remove('is-valid', 'is-invalid');
@@ -155,7 +148,7 @@ function validateActionName() {
   return true;
 }
 
-// ---------- Toast-хелпер ----------
+
 function showToast(title, body, type = 'success') {
   toastTitle.textContent = title;
   toastBody.textContent = body;
@@ -166,13 +159,13 @@ function showToast(title, body, type = 'success') {
   saveToast.show();
 }
 
-// ---------- Обработчики событий (минимум 3 — требование №10) ----------
 
-// 1. Сохранение формы
+
+
 saveBtn.addEventListener('click', () => {
   if (!validateActionName()) {
     showToast('Ошибка', 'Проверьте обязательные поля', 'warning');
-    // Берём текст из notifications.json (второй элемент — warning)
+   
     return;
   }
 
@@ -182,23 +175,23 @@ saveBtn.addEventListener('click', () => {
     status: actionStatusSelect.value
   };
 
-  rowsData.unshift(newRow); // добавляем в начало
+  rowsData.unshift(newRow); 
   renderTable();
 
-  // Сброс формы
+  
   addForm.reset();
   actionNameInput.classList.remove('is-valid', 'is-invalid');
 
-  // Закрываем modal программно
+  
   const modalInstance = bootstrap.Modal.getOrCreateInstance(document.getElementById('addModal'));
   modalInstance.hide();
 
-  // Показываем toast с текстом из notifications.json
+  
   const successNotif = notificationsData.find(n => n.type === 'success');
   showToast('Успех', successNotif ? successNotif.text : 'Изменения сохранены', 'success');
 });
 
-// 2. Живая валидация при вводе
+
 actionNameInput.addEventListener('input', () => {
   if (actionNameInput.value.length > 0) {
     validateActionName();
@@ -207,7 +200,7 @@ actionNameInput.addEventListener('input', () => {
   }
 });
 
-// 3. Кнопка «Обновить данные»
+
 refreshBtn.addEventListener('click', async () => {
   refreshBtn.disabled = true;
   refreshBtn.textContent = 'Загрузка…';
@@ -218,7 +211,7 @@ refreshBtn.addEventListener('click', async () => {
   showToast('Готово', 'Данные обновлены из JSON', 'success');
 });
 
-// 4. Переключение текстового состояния (дополнительный обработчик)
+
 let themeToggled = false;
 toggleThemeBtn.addEventListener('click', () => {
   themeToggled = !themeToggled;
