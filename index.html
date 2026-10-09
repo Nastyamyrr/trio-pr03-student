@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Админ-панель ТРПО — Практика 3</title>
+  <!-- Bootstrap 5 CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+  <!-- Custom CSS -->
+  <link rel="stylesheet" href="css/custom.css">
+</head>
+<body>
+  <!-- ===== NAVBAR ===== -->
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark sticky-top">
+    <div class="container">
+      <a class="navbar-brand fw-bold" href="#">Админ-панель ТРПО</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNav"
+              aria-controls="mainNav" aria-expanded="false" aria-label="Открыть меню">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="mainNav">
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+          <li class="nav-item">
+            <a class="nav-link" href="#metrics">Показатели</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#actions">Операции</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#info">Информация</a>
+          </li>
+        </ul>
+        <div class="d-flex align-items-center gap-2">
+          <button class="btn btn-outline-light btn-sm" type="button" data-bs-toggle="offcanvas"
+                  data-bs-target="#notificationsOffcanvas" aria-controls="notificationsOffcanvas">
+            Уведомления
+            <span class="badge text-bg-warning" id="notifBadge">0</span>
+          </button>
+          <img src="data/assets/avatar.svg" alt="Аватар" width="36" height="36" class="rounded-circle border border-light">
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <main class="container py-4">
+    <!-- ===== HERO ===== -->
+    <section class="hero-card mb-4 p-4">
+      <span class="badge rounded-pill text-bg-primary mb-2">практика 3 · bootstrap 5</span>
+      <h1 class="h3 mb-2">Панель управления операциями</h1>
+      <p class="text-muted mb-3">Данные загружаются из <code>dashboard.json</code> и <code>notifications.json</code>.
+        Интерфейс адаптивный, компоненты Bootstrap + собственный JavaScript.</p>
+      <div class="d-flex flex-wrap gap-2">
+        <button class="btn btn-primary" id="openModalBtn" data-bs-toggle="modal" data-bs-target="#addModal">
+          Добавить операцию
+        </button>
+        <button class="btn btn-outline-secondary" id="refreshBtn" type="button">
+          Обновить данные
+        </button>
+        <button class="btn btn-outline-info" id="toggleThemeBtn" type="button">
+          Сменить тему текста
+        </button>
+      </div>
+    </section>
+
+    <!-- ===== METRICS CARDS ===== -->
+    <section id="metrics" class="mb-4">
+      <h2 class="h5 mb-3">Ключевые показатели</h2>
+      <div class="row g-3" id="metricsRow">
+        <!-- карточки заполняются из JS -->
+      </div>
+    </section>
+
+    <!-- ===== TABLE ===== -->
+    <section id="actions" class="mb-4">
+      <div class="d-flex justify-content-between align-items-center mb-3">
+        <h2 class="h5 mb-0">Последние операции</h2>
+        <span class="badge text-bg-secondary" id="rowsCounter">0 записей</span>
+      </div>
+      <div class="table-responsive">
+        <table class="table table-hover align-middle bg-white shadow-sm rounded overflow-hidden">
+          <thead class="table-light">
+            <tr>
+              <th scope="col">ID</th>
+              <th scope="col">Операция</th>
+              <th scope="col">Статус</th>
+            </tr>
+          </thead>
+          <tbody id="actionsTableBody">
+            <!-- строки заполняются из JS -->
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- ===== ACCORDION (доп. информация) ===== -->
+    <section id="info" class="mb-4">
+      <h2 class="h5 mb-3">Дополнительная информация</h2>
+      <div class="accordion" id="infoAccordion">
+        <div class="accordion-item">
+          <h2 class="accordion-header">
+            <button class="accordion-button" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+              О панели
+            </button>
+          </h2>
+          <div id="collapseOne" class="accordion-collapse collapse show" data-bs-parent="#infoAccordion">
+            <div class="accordion-body">
+              Эта административная панель демонстрирует использование сетки Bootstrap,
+              карточек, таблицы, модального окна, offcanvas, toast и собственного JavaScript.
+              Данные берутся из JSON-файлов папки <code>data/</code>.
+            </div>
+          </div>
+        </div>
+        <div class="accordion-item">
+          <h2 class="accordion-header">
+            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+              Используемые компоненты
+            </button>
+          </h2>
+          <div id="collapseTwo" class="accordion-collapse collapse" data-bs-parent="#infoAccordion">
+            <div class="accordion-body">
+              Navbar, Grid, Cards, Table, Modal, Offcanvas, Accordion, Toast, Form, Badge, Button.
+            </div>
+          </div>
+        </div>
+        <div class="accordion-item">
+          <h2 class="accordion-header">
+            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+              График (пример SVG)
+            </button>
+          </h2>
+          <div id="collapseThree" class="accordion-collapse collapse" data-bs-parent="#infoAccordion">
+            <div class="accordion-body text-center">
+              <img src="data/assets/chart.svg" alt="Пример графика" class="img-fluid rounded" style="max-height:220px">
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- ===== FOOTER ===== -->
+  <footer class="bg-dark text-white-50 py-3 mt-auto">
+    <div class="container text-center small">
+      Практика 3 · Технологии разработки программного обеспечения · Bootstrap 5 + JS
+    </div>
+  </footer>
+
+  <!-- ===== MODAL: добавить операцию ===== -->
+  <div class="modal fade" id="addModal" tabindex="-1" aria-labelledby="addModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5" id="addModalLabel">Новая операция</h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Закрыть"></button>
+        </div>
+        <div class="modal-body">
+          <form id="addForm" novalidate>
+            <div class="mb-3">
+              <label for="actionName" class="form-label">Название операции <span class="text-danger">*</span></label>
+              <input type="text" class="form-control" id="actionName" name="actionName"
+                     placeholder="Например: Операция 9" required minlength="3">
+              <div class="invalid-feedback">Введите название (минимум 3 символа).</div>
+              <div class="valid-feedback">Отлично!</div>
+            </div>
+            <div class="mb-3">
+              <label for="actionStatus" class="form-label">Статус</label>
+              <select class="form-select" id="actionStatus" name="actionStatus">
+                <option value="Новая" selected>Новая</option>
+                <option value="В работе">В работе</option>
+                <option value="Готово">Готово</option>
+              </select>
+            </div>
+            <div class="mb-3">
+              <label for="actionNote" class="form-label">Комментарий</label>
+              <textarea class="form-control" id="actionNote" name="actionNote" rows="2"
+                        placeholder="Необязательно"></textarea>
+            </div>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Отмена</button>
+          <button type="button" class="btn btn-primary" id="saveBtn">Сохранить</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== OFFCANVAS: уведомления ===== -->
+  <div class="offcanvas offcanvas-end" tabindex="-1" id="notificationsOffcanvas"
+       aria-labelledby="notificationsOffcanvasLabel">
+    <div class="offcanvas-header">
+      <h5 class="offcanvas-title" id="notificationsOffcanvasLabel">Уведомления</h5>
+      <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Закрыть"></button>
+    </div>
+    <div class="offcanvas-body" id="notificationsList">
+      <!-- заполняется из JS -->
+    </div>
+  </div>
+
+  <!-- ===== TOAST ===== -->
+  <div class="toast-container position-fixed bottom-0 end-0 p-3">
+    <div id="saveToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+      <div class="toast-header">
+        <strong class="me-auto" id="toastTitle">Уведомление</strong>
+        <small>сейчас</small>
+        <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Закрыть"></button>
+      </div>
+      <div class="toast-body" id="toastBody">
+        Изменения сохранены
+      </div>
+    </div>
+  </div>
+
+  <!-- Bootstrap 5 Bundle JS (включает Popper) -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+          integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+          crossorigin="anonymous"></script>
+  <!-- Собственный JS -->
+  <script src="js/app.js"></script>
+</body>
+</html>
