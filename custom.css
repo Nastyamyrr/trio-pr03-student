@@ -1,6 +1,4 @@
-/* custom.css — только то, что неудобно сделать utility-классами Bootstrap */
 
-/* Фоновый цвет страницы */
 body {
   background-color: #f4f6fb;
   min-height: 100vh;
@@ -12,14 +10,14 @@ main {
   flex: 1;
 }
 
-/* Герой-карточка */
+
 .hero-card {
   background: #fff;
   border-radius: 1rem;
   box-shadow: 0 8px 24px rgba(0, 0, 0, 0.06);
 }
 
-/* Карточки метрик */
+
 .metric-card {
   border-radius: 0.85rem;
   transition: transform 0.15s ease, box-shadow 0.15s ease;
@@ -36,13 +34,13 @@ main {
   opacity: 0.85;
 }
 
-/* Таблица в карточке */
+
 .table {
   border-radius: 0.75rem;
   overflow: hidden;
 }
 
-/* Альтернативная тема текста (переключается кнопкой) */
+
 body.alt-theme {
   color: #1a365d;
 }
@@ -52,7 +50,7 @@ body.alt-theme .card-title {
   color: #2b6cb0;
 }
 
-/* Небольшие правки для мобильных */
+
 @media (max-width: 575.98px) {
   .hero-card {
     padding: 1.25rem !important;
